@@ -14,11 +14,10 @@ public class SmokeTests extends BaseTest {
     @Test
     public void fetchGist() {
         String sinceDate = Utilities.getDateWithOffset(3);
-        System.out.println(sinceDate);
 
         ValidatableResponse response = given().auth()
             .oauth2(ConfigReader.getProperty("oauth2"))
-            .queryParam("since","2020-01-01T00:00:00Z" )
+            .queryParam("since",sinceDate )
             .header("accept", "application/vnd.github+json")
             .when()
             .get()

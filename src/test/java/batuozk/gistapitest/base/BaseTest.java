@@ -15,4 +15,6 @@ public class BaseTest {
         RestAssured.basePath = ConfigReader.getProperty("basePath");
     }
 
+
+
 }
