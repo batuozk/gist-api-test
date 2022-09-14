@@ -19,7 +19,6 @@ public class GetRequests {
                 .oauth2(ConfigReader.getProperty("oauth2"))
                 .queryParam("since", sinceDate)
                 .header("accept", "application/vnd.github+json")
-                .when()
                 .get()
                 .then();
     }

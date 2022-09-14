@@ -4,6 +4,7 @@ import batuozk.gistapitest.base.BaseTest;
 import batuozk.gistapitest.base.ConfigReader;
 import batuozk.gistapitest.base.Utilities;
 import batuozk.gistapitest.requests.GetRequests;
+import batuozk.gistapitest.requests.PostRequests;
 import io.restassured.response.ValidatableResponse;
 import org.junit.jupiter.api.Test;
 
@@ -18,23 +19,42 @@ import static org.hamcrest.Matchers.lessThan;
 import static org.hamcrest.Matchers.equalTo;
 
 public class SmokeTests extends BaseTest {
+
     @Test
     public void fetchGist() {
+        //TODO per_page & page parameters
         GetRequests getRequest = new GetRequests();
         String sinceDate = Utilities.getDateWithOffset(3);
 
-        var response = getRequest.getUserGists(sinceDate);
+        ValidatableResponse response = getRequest.getUserGists(sinceDate);
         ArrayList arrayList = response.extract().path("");
 
         for(int i = 0; i < arrayList.size(); i++){
-            System.out.println("Gist " + i + " --------");
+            System.out.println("Gist " + (i+1) + "--------");
             var fileName = ((LinkedHashMap)((LinkedHashMap)arrayList.get(i)).get("files")).keySet().toArray()[0];
             System.out.println(fileName);
             System.out.println(((LinkedHashMap)((LinkedHashMap)arrayList.get(i)).get("owner")).get("login"));
         }
-
-
     }
+
+    @Test
+    public void createGist() {
+        PostRequests postRequest = new PostRequests();
+        String gistDesc = "Description of a test Gist - " + createGUID();
+        String gistTitle = "TestGistTitle-" + createGUID() + ".txt";
+        String gistContent = "Content of a test Gist - " + createGUID();
+        boolean isPublic = false;
+
+        ValidatableResponse response = postRequest.postGist(gistDesc, gistTitle, gistContent, isPublic);
+
+        System.out.println("New Gist URL: " + response.extract().path("url"));
+    }
+
+
+    String createGUID(){
+        return java.util.UUID.randomUUID().toString();
+    }
+
 }
 //        ArrayList arrayList = response.extract().path("");
 //        for(var gistData : arrayList){
@@ -45,8 +65,8 @@ public class SmokeTests extends BaseTest {
 //        System.out.println(hashmap);
 //        }
 
-//        response.extract().
-//            .statusCode(200)
-//            .body("ResponseState",equalTo(0))
-//            .and().time(lessThan(10000L))
-//            .extract().response().prettyPrint();
+//              then
+//				.statusCode(200)
+//				.body("Result", equalTo(true))
+//				.and().time(lessThan(10000L))
+//              .extract().response().prettyPrint();
