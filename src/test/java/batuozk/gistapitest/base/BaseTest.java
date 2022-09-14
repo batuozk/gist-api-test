@@ -10,9 +10,7 @@ public class BaseTest {
 
     @BeforeAll
     public static void setUp(){
-        System.out.println(ConfigReader.getProperty("baseURI") + ConfigReader.getProperty("basePath"));
-        RestAssured.baseURI = ConfigReader.getProperty("baseURI");
-        RestAssured.basePath = ConfigReader.getProperty("basePath");
+
     }
 
 
