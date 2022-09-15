@@ -3,7 +3,6 @@ package batuozk.gistapitest.test;
 import batuozk.gistapitest.base.BaseTest;
 import batuozk.gistapitest.base.ConfigReader;
 import batuozk.gistapitest.base.Utilities;
-import batuozk.gistapitest.pojo.GistBody;
 import io.restassured.response.ValidatableResponse;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
@@ -74,6 +73,21 @@ public class SmokeTests extends BaseTest {
                 gistId);
 
 //        response.extract().response().prettyPrint();
+    }
+
+    @Test
+    public void deleteGist(){
+        String gistDesc = "Gist to be deleted";
+        String gistTitle = "TestGistToDelete.txt";
+        String gistContent = "Content of a test Gist to be deleted";
+        boolean isPublic = false;
+
+        ValidatableResponse createResponse = postRequest.postGist(gistDesc, gistTitle, gistContent, isPublic);
+        String gistId = createResponse.extract().path("id");
+        System.out.println("Gist ID to delete: " + gistId);
+
+        ValidatableResponse deleteResponse = deleteRequests.deleteGistById(gistId);
+        deleteResponse.statusCode(204).extract().response().prettyPrint();
     }
 
 }

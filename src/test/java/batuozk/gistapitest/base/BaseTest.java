@@ -1,5 +1,6 @@
 package batuozk.gistapitest.base;
 
+import batuozk.gistapitest.requests.DeleteRequests;
 import batuozk.gistapitest.requests.GetRequests;
 import batuozk.gistapitest.requests.PatchRequests;
 import batuozk.gistapitest.requests.PostRequests;
@@ -12,6 +13,7 @@ public class BaseTest {
     protected static GetRequests getRequest;
     protected static PostRequests postRequest;
     protected static PatchRequests patchRequests;
+    protected static DeleteRequests deleteRequests;
 
     @BeforeAll
     public static void setUp(){
@@ -19,6 +21,7 @@ public class BaseTest {
         getRequest = new GetRequests();
         postRequest = new PostRequests();
         patchRequests = new PatchRequests();
+        deleteRequests = new DeleteRequests();
     }
 
 
