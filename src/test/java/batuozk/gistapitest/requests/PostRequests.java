@@ -1,19 +1,16 @@
 package batuozk.gistapitest.requests;
 
+import batuozk.gistapitest.base.BaseApi;
 import batuozk.gistapitest.base.ConfigReader;
 import io.restassured.RestAssured;
 import io.restassured.response.ValidatableResponse;
+import io.restassured.specification.RequestSpecification;
 
 import static io.restassured.RestAssured.given;
 
-public class PostRequests {
+public class PostRequests extends BaseApi {
 
-    public PostRequests(){
-        RestAssured.baseURI = ConfigReader.getProperty("baseURI");
-        RestAssured.basePath = ConfigReader.getProperty("basePath");
-    }
-
-    public ValidatableResponse postGist(String gistDesc, String gistTitle, String gistContent, boolean isPublic){
+    public ValidatableResponse postGist(String gistDesc, String gistTitle, String gistContent, Boolean isPublic){
         String postBody = "{\"description\":\"" + gistDesc + "\","
                             + "\"public\":" + isPublic + ","
                             + "\"files\":{"
@@ -25,12 +22,9 @@ public class PostRequests {
 
         System.out.println(postBody);
 
-        return given().auth()
-                .oauth2(ConfigReader.getProperty("oauth2"))
-                .header("accept", "application/vnd.github+json")
+        return requestSpec()
                 .body(postBody)
                 .post()
                 .then();
     }
-
 }
