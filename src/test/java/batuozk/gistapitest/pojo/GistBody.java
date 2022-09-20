@@ -2,18 +2,25 @@ package batuozk.gistapitest.pojo;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.HashMap;
+
 public class GistBody {
     @SerializedName("description")
     private String description;
     @SerializedName("public")
     private Boolean isPublic;
     @SerializedName("files")
-    private Files files;
+    private HashMap<String, HashMap<String, String>> files;
 
-    public GistBody(String description, Boolean isPublic, String fileKey, String contentDesc){
+    public GistBody(String description, Boolean isPublic, String fileName, String contentDesc){
+        HashMap<String, String> contentMap =new HashMap<>(){{
+            put("content", contentDesc);
+        }};
         this.description = description;
         this.isPublic = isPublic;
-        this.files = new Files(fileKey,contentDesc);
+        this.files = new HashMap<>(){{
+            put(fileName, contentMap);
+        }};
     }
 
     public String getDescription() {
@@ -30,13 +37,5 @@ public class GistBody {
 
     public void setPublic(Boolean isPublic) {
         this.isPublic = isPublic;
-    }
-
-    public Files getFiles() {
-        return files;
-    }
-
-    public void setFiles(Files files) {
-        this.files = files;
     }
 }

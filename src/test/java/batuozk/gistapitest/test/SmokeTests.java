@@ -3,6 +3,7 @@ package batuozk.gistapitest.test;
 import batuozk.gistapitest.base.BaseTest;
 import batuozk.gistapitest.base.ConfigReader;
 import batuozk.gistapitest.base.Utilities;
+import batuozk.gistapitest.pojo.GistBody;
 import io.restassured.response.ValidatableResponse;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
@@ -24,12 +25,13 @@ public class SmokeTests extends BaseTest {
 
     @Test
     public void createGist() {
-        String gistDesc = "Description of a test Gist - " + Utilities.createUUID();
-        String gistTitle = "TestGistTitle-" + Utilities.createUUID() + ".txt";
-        String gistContent = "Content of a test Gist - " + Utilities.createUUID();
-        boolean isPublic = false;
+        GistBody gistBody = new GistBody(
+                "Description of a test Gist - " + Utilities.createUUID(),
+                false,
+                "TestGistTitle-" + Utilities.createUUID() + ".txt",
+                "Content of a test Gist - " + Utilities.createUUID());
 
-        ValidatableResponse response = postRequest.postGist(gistDesc, gistTitle, gistContent, isPublic);
+        ValidatableResponse response = postRequest.postGist(gistBody);
         System.out.println("New Gist URL: " + response.extract().path("url"));
     }
 
@@ -60,29 +62,23 @@ public class SmokeTests extends BaseTest {
     @Test
     public void updateGist(){
         String gistId = ConfigReader.getProperty("gistToUpdate");
-//        GistBody gistBody = new GistBody(
-//                "Description of an updated gist",
-//                false,
-//                "filename.txt",
-//                "Content of the updated gist. Lorem ipsum dolor sit amet.");
-        ValidatableResponse response = patchRequests.updateGist(
+        GistBody gistBody = new GistBody(
                 "Description of an updated gist",
                 false,
-                "updatedFilename.txt",
-                "Content of the updated gist. Lorem ipsum dolor sit amet.",
-                gistId);
-
-//        response.extract().response().prettyPrint();
+                "gsonFilename.txt",
+                "Content of the updated gist. Lorem ipsum dolor sit amet.");
+        ValidatableResponse response = patchRequests.updateGist(gistBody, gistId);
+        response.extract().response().prettyPrint();
     }
 
     @Test
     public void deleteGist(){
-        String gistDesc = "Gist to be deleted";
-        String gistTitle = "TestGistToDelete.txt";
-        String gistContent = "Content of a test Gist to be deleted";
-        boolean isPublic = false;
-
-        ValidatableResponse createResponse = postRequest.postGist(gistDesc, gistTitle, gistContent, isPublic);
+        GistBody gistBody = new GistBody(
+                "Gist to be deleted",
+                false,
+                "TestGistToDelete.txt",
+                "Content of a test Gist to be deleted");
+        ValidatableResponse createResponse = postRequest.postGist(gistBody);
         String gistId = createResponse.extract().path("id");
         System.out.println("Gist ID to delete: " + gistId);
 
