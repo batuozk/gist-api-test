@@ -3,7 +3,6 @@ package batuozk.gistapitest.test;
 import batuozk.gistapitest.base.BaseTest;
 import batuozk.gistapitest.base.ConfigReader;
 import batuozk.gistapitest.base.Utilities;
-import batuozk.gistapitest.dto.GistDataBuilder;
 import batuozk.gistapitest.pojo.GistBody;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
@@ -22,7 +21,7 @@ public class SmokeTests extends BaseTest {
      * Fails test if status code is not 200 or returned gist count is less than 1.
      */
     @Test
-    public void fetchGist() {
+    public void listGist() {
         var response = getRequest.getUserGists();
 
         ArrayList arrayList = response.path("");
@@ -37,12 +36,7 @@ public class SmokeTests extends BaseTest {
      */
     @Test
     public void createGist() {
-        GistBody gistBody = new GistBody(
-                "Description of a test Gist - " + Utilities.createUUID(),
-                false,
-                "TestGistTitle-" + Utilities.createUUID() + ".txt",
-                "Content of a test Gist - " + Utilities.createUUID());
-
+        String gistBody = wireMockUtil.getGistBodyData("/testUrl").body().toString();
         Response response = postRequest.postGist(gistBody);
         Utilities.assertStatusCode(response, 201);
 
@@ -112,12 +106,13 @@ public class SmokeTests extends BaseTest {
         Utilities.assertStatusCode(deleteResponse,204);
         System.out.println("Gist deleted: " + gistId);
     }
-
-
-
 }
 
-
+//        GistBody gistBody = new GistBody(
+//                "Description of a test Gist - " + Utilities.createUUID(),
+//                false,
+//                "TestGistTitle-" + Utilities.createUUID() + ".txt",
+//                "Content of a test Gist - " + Utilities.createUUID());
 
 //        ArrayList arrayList = response.extract().path("");
 //        for(var gistData : arrayList){

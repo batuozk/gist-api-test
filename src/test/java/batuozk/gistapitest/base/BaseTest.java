@@ -1,5 +1,6 @@
 package batuozk.gistapitest.base;
 
+import batuozk.gistapitest.mock.WireMockUtil;
 import batuozk.gistapitest.requests.DeleteRequests;
 import batuozk.gistapitest.requests.GetRequests;
 import batuozk.gistapitest.requests.PatchRequests;
@@ -15,6 +16,7 @@ public class BaseTest {
     protected static PostRequests postRequest;
     protected static PatchRequests patchRequests;
     protected static DeleteRequests deleteRequests;
+    protected static WireMockUtil wireMockUtil;
 
     @BeforeAll
     public static void setUp(){
@@ -23,10 +25,14 @@ public class BaseTest {
         postRequest = new PostRequests();
         patchRequests = new PatchRequests();
         deleteRequests = new DeleteRequests();
+        wireMockUtil = new WireMockUtil();
+        System.out.println("Wiremock init");
+        wireMockUtil.setup();
     }
 
     @AfterAll
     public static void endTest(){
+        wireMockUtil.tearDown();
         System.out.println("End of Test");
     }
 

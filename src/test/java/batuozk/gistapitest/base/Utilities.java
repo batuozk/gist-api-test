@@ -42,7 +42,8 @@ public class Utilities {
         }
     }
 
-    public static void assertStatusCode(Response response, int statusCode){
-        Assertions.assertEquals(response.statusCode() == statusCode, "Bad status code, very bad.");
+    public static void assertStatusCode(Response response, int expectedStatusCode){
+        int statusCode = response.statusCode();
+        Assertions.assertEquals(expectedStatusCode, statusCode, "Bad status code, very bad.");
     }
 }

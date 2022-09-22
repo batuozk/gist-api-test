@@ -1,0 +1,13 @@
+F:\Coding\gist-api-test\src\test\java\batuozk\gistapitest\test\AcceptanceTests.java
+F:\Coding\gist-api-test\src\test\java\batuozk\gistapitest\base\Utilities.java
+F:\Coding\gist-api-test\src\test\java\batuozk\gistapitest\requests\GetRequests.java
+F:\Coding\gist-api-test\src\test\java\batuozk\gistapitest\mock\WireMockUtil.java
+F:\Coding\gist-api-test\src\test\java\batuozk\gistapitest\base\ConfigReader.java
+F:\Coding\gist-api-test\src\test\java\batuozk\gistapitest\pojo\GistBody.java
+F:\Coding\gist-api-test\src\test\java\batuozk\gistapitest\requests\DeleteRequests.java
+F:\Coding\gist-api-test\src\test\java\batuozk\gistapitest\dto\GistDataBuilder.java
+F:\Coding\gist-api-test\src\test\java\batuozk\gistapitest\base\BaseApi.java
+F:\Coding\gist-api-test\src\test\java\batuozk\gistapitest\base\BaseTest.java
+F:\Coding\gist-api-test\src\test\java\batuozk\gistapitest\requests\PostRequests.java
+F:\Coding\gist-api-test\src\test\java\batuozk\gistapitest\test\SmokeTests.java
+F:\Coding\gist-api-test\src\test\java\batuozk\gistapitest\requests\PatchRequests.java

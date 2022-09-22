@@ -1,9 +1,8 @@
-
 {
-  "description": "Description of an updated gist",
+  "description": "Description of an updated gist + wiremock test",
   "files": {
     "README.md": {
-      "content": "Hello World from GitHub"
+      "content": "Gsit content + wiremock test"
     }
   }
 }

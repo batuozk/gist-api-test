@@ -10,4 +10,10 @@ public class PostRequests extends BaseApi {
                 .body(new Gson().toJson(gistBody))
                 .post();
     }
+
+    public Response postGist(String gistBody){
+        return requestSpec()
+                .body(gistBody)
+                .post();
+    }
 }
