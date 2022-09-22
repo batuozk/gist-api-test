@@ -1,37 +1,27 @@
 package batuozk.gistapitest.requests;
 
 import batuozk.gistapitest.base.BaseApi;
-import batuozk.gistapitest.base.ConfigReader;
-import io.restassured.RestAssured;
-import io.restassured.response.ValidatableResponse;
-import io.restassured.specification.RequestSpecification;
-
-import static io.restassured.RestAssured.given;
+import io.restassured.response.Response;
 
 public class GetRequests extends BaseApi {
 
-    public ValidatableResponse getUserGists(String sinceDate){
+    public Response getUserGists(){
         return requestSpec()
-                .queryParam("since", sinceDate)
-                .get()
-                .then();
+                .get();
     }
 
-    public ValidatableResponse getGistWithId(String gistId){
+    public Response getGistWithId(String gistId){
         return requestSpec()
-                .get("/"+gistId)
-                .then();
+                .get("/"+gistId);
     }
 
-    public ValidatableResponse getUserPublicGists(){
+    public Response getUserPublicGists(){
         return requestSpec()
-                .get("/public")
-                .then();
+                .get("/public");
     }
 
-    public ValidatableResponse getUserStarredGists(){
+    public Response getUserStarredGists(){
         return requestSpec()
-                .get("/starred")
-                .then();
+                .get("/starred");
     }
 }

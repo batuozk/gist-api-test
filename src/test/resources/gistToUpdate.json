@@ -1,0 +1,9 @@
+
+{
+  "description": "Description of an updated gist",
+  "files": {
+    "README.md": {
+      "content": "Hello World from GitHub"
+    }
+  }
+}

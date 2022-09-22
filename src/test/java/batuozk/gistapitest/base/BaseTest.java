@@ -4,6 +4,7 @@ import batuozk.gistapitest.requests.DeleteRequests;
 import batuozk.gistapitest.requests.GetRequests;
 import batuozk.gistapitest.requests.PatchRequests;
 import batuozk.gistapitest.requests.PostRequests;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
 /**
@@ -22,6 +23,11 @@ public class BaseTest {
         postRequest = new PostRequests();
         patchRequests = new PatchRequests();
         deleteRequests = new DeleteRequests();
+    }
+
+    @AfterAll
+    public static void endTest(){
+        System.out.println("End of Test");
     }
 
 

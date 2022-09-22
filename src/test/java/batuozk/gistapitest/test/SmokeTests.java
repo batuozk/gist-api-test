@@ -3,26 +3,38 @@ package batuozk.gistapitest.test;
 import batuozk.gistapitest.base.BaseTest;
 import batuozk.gistapitest.base.ConfigReader;
 import batuozk.gistapitest.base.Utilities;
+import batuozk.gistapitest.dto.GistDataBuilder;
 import batuozk.gistapitest.pojo.GistBody;
-import io.restassured.response.ValidatableResponse;
+import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Assertions;
 import java.util.ArrayList;
 
 
 public class SmokeTests extends BaseTest {
 
     //TODO per_page & page parameters
+    //BBB status code kontrolü 200 yerine 401 geldiği zaman bunun sebebi Assertion ile detaylandırılmalı mı?
+    //BBB createdGist()'te yaratılan Gist'ler için bir temizleme protokolü yapılsa nereye koyulur?
 
+    /**
+     * Gets authenticated users gists and prints them on the console.
+     * Fails test if status code is not 200 or returned gist count is less than 1.
+     */
     @Test
     public void fetchGist() {
-        String sinceDate = Utilities.getDateWithOffset(3);
+        var response = getRequest.getUserGists();
 
-        ValidatableResponse response = getRequest.getUserGists(sinceDate);
-        ArrayList arrayList = response.extract().path("");
-
+        ArrayList arrayList = response.path("");
+        Assertions.assertTrue(arrayList.size() > 0);
+        Utilities.assertStatusCode(response, 200);
         Utilities.printUserGists(arrayList);
     }
 
+    /**
+     * Creates a new gist for the authenticated user. Prints out the created gists URL
+     *
+     */
     @Test
     public void createGist() {
         GistBody gistBody = new GistBody(
@@ -31,23 +43,33 @@ public class SmokeTests extends BaseTest {
                 "TestGistTitle-" + Utilities.createUUID() + ".txt",
                 "Content of a test Gist - " + Utilities.createUUID());
 
-        ValidatableResponse response = postRequest.postGist(gistBody);
-        System.out.println("New Gist URL: " + response.extract().path("url"));
+        Response response = postRequest.postGist(gistBody);
+        Utilities.assertStatusCode(response, 201);
+
+        String gistUrl = response.path("url");
+        System.out.println("New Gist URL: " + gistUrl);
     }
 
+    /**
+     * Gets public gists listed on GitHub
+     */
     @Test
     public void listPublicGists(){
-        ValidatableResponse response = getRequest.getUserPublicGists();
-        ArrayList arrayList = response.extract().path("");
+        Response response = getRequest.getUserPublicGists();
+        ArrayList arrayList = response.path("");
 
+        Assertions.assertTrue(arrayList.size() > 0);
+        Utilities.assertStatusCode(response, 200);
         Utilities.printUserGists(arrayList);
     }
 
     @Test
     public void listStarredGists(){
-        ValidatableResponse response = getRequest.getUserStarredGists();
-        ArrayList arrayList = response.extract().path("");
+        Response response = getRequest.getUserStarredGists();
+        ArrayList arrayList = response.path("");
 
+        Assertions.assertTrue(arrayList.size() > 0);
+        Utilities.assertStatusCode(response, 200);
         Utilities.printUserGists(arrayList);
     }
 
@@ -55,20 +77,24 @@ public class SmokeTests extends BaseTest {
     public void getGistWithId(){
         String gistId = ConfigReader.getProperty("gistById");
         System.out.println("Gist with ID: " + gistId);
-        ValidatableResponse response = getRequest.getGistWithId(gistId);
-        System.out.println(response.extract().path("description").toString());
+        Response response = getRequest.getGistWithId(gistId);
+
+        Utilities.assertStatusCode(response, 200);
+        System.out.println(response.path("description").toString());
     }
 
     @Test
     public void updateGist(){
         String gistId = ConfigReader.getProperty("gistToUpdate");
+        String updatedDescription = "Description - " + Utilities.createUUID();
         GistBody gistBody = new GistBody(
-                "Description of an updated gist",
+                updatedDescription,
                 false,
                 "gsonFilename.txt",
                 "Content of the updated gist. Lorem ipsum dolor sit amet.");
-        ValidatableResponse response = patchRequests.updateGist(gistBody, gistId);
-        response.extract().response().prettyPrint();
+        Response response = patchRequests.updateGist(gistBody, gistId);
+        Utilities.assertStatusCode(response, 200);
+        response.prettyPrint();
     }
 
     @Test
@@ -78,13 +104,16 @@ public class SmokeTests extends BaseTest {
                 false,
                 "TestGistToDelete.txt",
                 "Content of a test Gist to be deleted");
-        ValidatableResponse createResponse = postRequest.postGist(gistBody);
-        String gistId = createResponse.extract().path("id");
+        Response createResponse = postRequest.postGist(gistBody);
+        String gistId = createResponse.path("id");
         System.out.println("Gist ID to delete: " + gistId);
 
-        ValidatableResponse deleteResponse = deleteRequests.deleteGistById(gistId);
-        deleteResponse.statusCode(204).extract().response().prettyPrint();
+        Response deleteResponse = deleteRequests.deleteGistById(gistId);
+        Utilities.assertStatusCode(deleteResponse,204);
+        System.out.println("Gist deleted: " + gistId);
     }
+
+
 
 }
 

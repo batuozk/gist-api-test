@@ -1,5 +1,8 @@
 package batuozk.gistapitest.base;
 
+import io.restassured.response.Response;
+import org.junit.jupiter.api.Assertions;
+
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -14,7 +17,10 @@ public class Utilities {
      * @return ISO-8601 date String
      */
     public static String getDateWithOffset(int months){
-        return ZonedDateTime.now(ZoneId.of("Asia/Istanbul")).minusMonths(months).format( DateTimeFormatter.ISO_INSTANT );
+        return ZonedDateTime
+                .now(ZoneId.of("Asia/Istanbul"))
+                .minusMonths(months)
+                .format( DateTimeFormatter.ISO_INSTANT );
     }
     /**
      * Creates a universally unique identifier
@@ -30,10 +36,13 @@ public class Utilities {
      */
     public static void printUserGists(ArrayList arrayList){
         for(int i = 0; i < arrayList.size(); i++){
-            System.out.println("Gist " + (i+1) + "--------");
             var fileName = ((LinkedHashMap)((LinkedHashMap)arrayList.get(i)).get("files")).keySet().toArray()[0];
-            System.out.println(fileName);
-            System.out.println(((LinkedHashMap)((LinkedHashMap)arrayList.get(i)).get("owner")).get("login"));
+            System.out.println("Gist " + (i+1) + ": " + fileName);
+//            System.out.println(((LinkedHashMap)((LinkedHashMap)arrayList.get(i)).get("owner")).get("login"));
         }
+    }
+
+    public static void assertStatusCode(Response response, int statusCode){
+        Assertions.assertEquals(response.statusCode() == statusCode, "Bad status code, very bad.");
     }
 }
