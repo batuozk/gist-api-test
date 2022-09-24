@@ -36,7 +36,7 @@ public class SmokeTests extends BaseTest {
      */
     @Test
     public void createGist() {
-        String gistBody = wireMockUtil.getGistBodyData("/testUrl").body().toString();
+        String gistBody = wireMockUtil.getGistBodyData();
         Response response = postRequest.postGist(gistBody);
         Utilities.assertStatusCode(response, 201);
 

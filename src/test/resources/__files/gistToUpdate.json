@@ -1,8 +1,8 @@
 {
   "description": "Description of an updated gist + wiremock test",
   "files": {
-    "README.md": {
-      "content": "Gsit content + wiremock test"
+    "createGist.txt": {
+      "content": "Gist content + wiremock test"
     }
   }
 }

@@ -21,11 +21,11 @@ public class WireMockUtil {
                     .withBodyFile("gistToUpdate.json")));
     }
 
-    public Response getGistBodyData(String endPoint) {
+    public String getGistBodyData() {
         Response response = given().
                             when().
                             get("http://localhost:"+portNumber+ "/testUrl");
-        return response;
+        return response.prettyPrint();
     }
 
     public void tearDown(){
