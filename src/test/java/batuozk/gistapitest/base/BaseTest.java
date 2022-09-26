@@ -25,9 +25,8 @@ public class BaseTest {
         postRequest = new PostRequests();
         patchRequests = new PatchRequests();
         deleteRequests = new DeleteRequests();
+        System.out.println("Wiremock initialization");
         wireMockUtil = new WireMockUtil();
-        System.out.println("Wiremock init");
-        wireMockUtil.setup();
     }
 
     @AfterAll

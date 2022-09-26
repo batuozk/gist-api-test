@@ -1,0 +1,9 @@
+{
+  "description": "Description of a new gist",
+  "public": false,
+  "files": {
+    "createGist.txt": {
+      "content": "Created gist with data from wiremock"
+    }
+  }
+}

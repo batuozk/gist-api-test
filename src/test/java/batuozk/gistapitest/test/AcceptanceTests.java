@@ -8,14 +8,8 @@ public class AcceptanceTests extends BaseTest {
     SmokeTests smokeTest = new SmokeTests();
 
     @Test
-    public void acceptanceScenario(){
-        smokeTest.listGist();
-        smokeTest.getGistWithId();
-        smokeTest.listStarredGists();
-        smokeTest.listPublicGists();
-        smokeTest.createGist();
-        smokeTest.updateGist();
-        smokeTest.deleteGist();
+    public void lifecycleScenario(){
+
     }
 
 }

@@ -14,4 +14,11 @@ public class PatchRequests extends BaseApi {
                 .patch("/"+gistId);
     }
 
+    public Response updateGist(String gistBody, String gistId){
+        System.out.println(gistBody);
+        return requestSpec()
+                .body(gistBody)
+                .patch("/"+gistId);
+    }
+
 }

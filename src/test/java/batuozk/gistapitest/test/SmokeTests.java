@@ -36,7 +36,7 @@ public class SmokeTests extends BaseTest {
      */
     @Test
     public void createGist() {
-        String gistBody = wireMockUtil.getGistBodyData();
+        String gistBody = wireMockUtil.getNewGistRequestBody();
         Response response = postRequest.postGist(gistBody);
         Utilities.assertStatusCode(response, 201);
 
@@ -80,15 +80,10 @@ public class SmokeTests extends BaseTest {
     @Test
     public void updateGist(){
         String gistId = ConfigReader.getProperty("gistToUpdate");
-        String updatedDescription = "Description - " + Utilities.createUUID();
-        GistBody gistBody = new GistBody(
-                updatedDescription,
-                false,
-                "gsonFilename.txt",
-                "Content of the updated gist. Lorem ipsum dolor sit amet.");
+        String gistBody = wireMockUtil.getGistUpdateRequestBody();
+
         Response response = patchRequests.updateGist(gistBody, gistId);
         Utilities.assertStatusCode(response, 200);
-        response.prettyPrint();
     }
 
     @Test

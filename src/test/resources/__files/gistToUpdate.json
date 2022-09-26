@@ -1,8 +1,8 @@
 {
-  "description": "Description of an updated gist + wiremock test",
+  "description": "Description of an updated gist with wiremock",
   "files": {
-    "createGist.txt": {
-      "content": "Gist content + wiremock test"
+    "updateGist.txt": {
+      "content": "Updated content + wiremock test"
     }
   }
 }
