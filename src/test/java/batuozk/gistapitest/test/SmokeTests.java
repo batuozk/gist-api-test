@@ -31,7 +31,7 @@ public class SmokeTests extends BaseTest {
     }
 
     /**
-     * Creates a new gist for the authenticated user. Prints out the created gists URL
+     * Creates a new gist for the authenticated user. Prints out the created gists URL.
      *
      */
     @Test
