@@ -28,14 +28,14 @@ public class WireMockUtil {
         Response response = given().
                             when().
                             get("http://localhost:"+portNumber+ "/gistToCreate");
-        return response.prettyPrint();
+        return response.body().asString();
     }
 
     public String getGistUpdateRequestBody() {
         Response response = given().
                             when().
                             get("http://localhost:"+portNumber+ "/gistToUpdate");
-        return response.prettyPrint();
+        return response.body().asString();
     }
 
     public void tearDown(){
