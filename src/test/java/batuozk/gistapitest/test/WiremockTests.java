@@ -9,7 +9,7 @@ import java.nio.file.Files;
 
 public class WiremockTests extends BaseTest {
     /**
-     * Wiremock connection test. (because other tests require oauth key to be stored in the repo)
+     * Wiremock connection test (because other tests require oauth key to be stored in the repo)
      */
     @Test
     public void wireMockConnectionTest(){
